@@ -14,7 +14,8 @@ if(isset($_POST['registerUser'])){
         $password = password_hash($_POST['pass_1'],PASSWORD_DEFAULT);
         $country = $_POST['country'];
         $city = $_POST['city'];
-        $contact = bin2hex($_POST['contact']);
+        $contact = $_POST['contact'];
+        //$contact = bin2hex($_POST['contact']);
 
         //echo $fullName, $email, $password, $country, $city, $contact;
 

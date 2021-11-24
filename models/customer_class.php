@@ -7,7 +7,9 @@ class Customer extends Dbconnection{
     function addCustomer($name, $email, $password, $country, $city, $contact){
         
     //return true or false
-    return $this->query("insert into customer(customer_name, customer_email, customer_pass, customer_country, customer_city, customer_contact) values('$name', '$email', '$password', '$country', '$city', '$contact')");
+    $sql = "insert into customer(customer_name, customer_email, customer_pass, customer_country, customer_city, customer_contact) values('$name', '$email', '$password', '$country', '$city', '$contact')"; 
+    
+    return $this->query($sql);
 
     }
 
