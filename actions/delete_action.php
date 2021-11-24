@@ -14,7 +14,7 @@ if(isset($_GET['deleteProductsID'])){
     $result = delete_products_controller($id);
 
     if($result === true) header("Location: ../admin/index.php");
-    else echo "deletion failed";
+    else echo "Deleted";
 
 
 }
@@ -31,7 +31,7 @@ if(isset($_GET['deleteBrandsID'])){
 
 
     if($result === true) header("Location: ../admin/index.php");
-    else echo "deletion failed";
+    else echo "Deleted";
 
 
 }
@@ -46,7 +46,7 @@ if(isset($_GET['deleteCategoriesID'])){
     $result = delete_categories_controller($id);
 
     if($result === true) header("Location: ../admin/index.php");
-    else echo "deletion failed";
+    else echo "Deleted";
 
 
 }

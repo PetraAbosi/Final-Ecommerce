@@ -34,5 +34,6 @@ function selectOneCustomerController($email){
     $customer_instance = new Customer();
     //call the method from the class
     return $customer_instance->selectOneCustomer($email);
+    
 }
 ?>
