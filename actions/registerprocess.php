@@ -22,13 +22,14 @@ if(isset($_POST['registerUser'])){
         // check if email already exist
         $result = selectOneCustomerController($email);
 
-        if ($email===$result["customer_email"]){
+        if ($result){
             echo '<script>alert("Email already exist! Login if you are already registered");
                 window.location ="../view/register.php?register=error";</script>';
         }
         else{
             //call the add customer controller
             $register = addCustomerController($fullName, $email, $password, $country,$city,$contact);
+            
             if($register === true) {
                 header("Location: ../view/login.php");
                 $_SESSION['register-success'] = 'Successfully created';
