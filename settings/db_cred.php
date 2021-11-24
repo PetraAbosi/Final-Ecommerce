@@ -6,7 +6,8 @@
 define('SERVER', 'localhost');
 define('USER', 'root');
 define('DATABASE', 'shoppn');
-define('PASSWORD', '');
+define('PASSWORD', getenv('MYSQLPASS') ?? '');
+
 
 
 ?>

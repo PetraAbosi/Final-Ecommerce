@@ -153,6 +153,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <?php
 
-	include_once "../services/footer.html";
+	//include_once "../services/footer.html";
 
 ?>
