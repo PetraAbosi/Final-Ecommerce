@@ -29,7 +29,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container-fluid">
           <li class="nav-item active">
-                    <a class="nav-link" href="logout.php">Home</a>
+                    <a class="nav-link" href="../view/index.php">Home</a>
                 </li>
           <li class="nav-item">
                     <a class="nav-link" href="logout.php">Logout</a>
@@ -172,7 +172,7 @@
                               </div>
                               <div class ="form-group">
 
-                                <label for="type of product">Category: </label>
+                               <!-- <label for="type of product">Category: </label>
 
                                 <select name="cars" id="cars">
                                 <option value="volvo">Volvo</option>
@@ -180,7 +180,7 @@
                                 <option value="mercedes">Mercedes</option>
                                 <option value="audi">Audi</option>
 
-                                </select>
+                                </select>-->
                               </div>
 
                               <div class="form-group">

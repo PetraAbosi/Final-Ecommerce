@@ -32,11 +32,11 @@ function add_categories_controller($name){
 
 
 
-function update_products_controller($product_catID,$product_title,$product_price,$product_desc,$fileName1, $product_id){
+function update_products_controller($product_catID,$product_brandID,$product_title,$product_price,$product_desc,$fileName1,$product_id){
     // create an instance of the Product class
     $product_instance = new Product();
     // call the method from the class
-    return $product_instance->update_one_products($product_catID,$product_title,$product_price,$product_desc,$fileName1, $product_id);
+    return $product_instance->update_one_products($product_catID,$product_brandID,$product_title,$product_price,$product_desc,$fileName1,$product_id);
 
 }
 
