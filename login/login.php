@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,23 +17,23 @@ session_start();
       <div class="card login-card">
         <div class="row no-gutters">
           <div class="col-md-5">
-            <img src="assets/images/login.jpg" alt="login" class="login-card-img">
+            <img src="assets/images/lr1.png" alt="login" class="login-card-img">
           </div>
           <div class="col-md-7">
             <div class="card-body">
               <div class="brand-wrapper">
-                <img src="assets/images/logo.svg" alt="logo" class="logo">
+                <img src="../images/roselogo.png" alt="logo" class="logo">
               </div>
               <p class="login-card-description">Log In to your account</p>
-              <form action="../actions/order_action.php" method="POST">
+              <form action="../actions/loginprocess.php" method="POST">
                  
                   <div class="form-group">
                     <label for="email" class="sr-only">Email</label>
-                    <input type="email" name="customer_email" id="customer_email" class="form-control" placeholder="Email address" required>
+                    <input type="email" name="email" id="customer_email" class="form-control" placeholder="Email address" required>
                   </div>
                   <div class="form-group mb-4">
                     <label for="password" class="sr-only">Password</label>
-                    <input type="password" name="customer_pass" id="customer_pass" class="form-control" placeholder="Your password" required>
+                    <input type="password" name="pass_1" id="customer_pass" class="form-control" placeholder="Your password" required>
                   
                   </div>
                  
@@ -46,13 +44,11 @@ session_start();
 
 
                <!-- <a href="#!" class="forgot-password-link">Forgot password?</a>-->
-                <p class="login-card-footer-text">Don't have an account ? <a href="register.php" class="text-reset">  Register here</a></p>
-                <p class="login-card-footer-text" style="align:left"> <a href="../admin/adminLogin.php" class="text-reset">  Admin</a></p>
+                <p class="login-card-footer-text">Do you have an account ? <a href="register.php" class="text-reset">  Register here</a></p>
                 
                 
                 <nav class="login-card-footer-nav">
-                  <a href="#!">Terms of use.</a>
-                  <a href="#!">Privacy policy</a>
+                  <a href="../view/terms.php">Terms of use.</a>
                 </nav>
             </div>
           </div>

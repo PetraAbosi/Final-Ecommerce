@@ -4,11 +4,11 @@ require('../controllers/cart_controller.php');
 $curl = curl_init();
 
 $customer_email = $_SESSION["customer_email"];
-$amount = total_Amount_in_Cart();// $_SESSION["amount"];;  //the amount in kobo. This value is actually NGN 300
+$amount = total_Amount_in_Cart()*100;// $_SESSION["amount"];;  //the amount in kobo. This value is actually NGN 300
 
 // url to go to after payment
 // $callback_url = 'http://'.$_SERVER['SERVER_NAME']. '/ecommerceFinale/view/callback.php';  
-$callback_url = 'http://localhost/ecommerceFinale/view/callback.php';  
+$callback_url = 'http://localhost/rose_enterprise/view/callback.php';  
 
 
 curl_setopt_array($curl, array(

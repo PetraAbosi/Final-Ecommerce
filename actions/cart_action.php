@@ -3,24 +3,21 @@ require_once('../controllers/cart_controller.php');
 require_once('../models/cart_class.php');
 
 //ADDING BRAND
-// check if theres a POST variable with the name 'addProductButton'
-if(isset($_GET['addCartButton'])){
+// check if there's a POST variable with the name 'addProductButton'
+if(isset($_GET['addtocart'])){
+    
     // retrieve the name, description and quantity from the form submission
     $prod_id = $_GET['product_id'];
     $ip = Cart::getIpAddress();
     $qty = $_GET['qty'];
-   
-  
-
-   
-
      
     // call the add_product_controller function: return true or false
     $result = add_carts($prod_id, $ip, $qty);
-   
+  
+     
 
-    if($result === true){
-         header("Location: ../view/cart.php");
+    if($result){
+         header("Location: ../cart/cart.php");
     }
     else {
         echo "insertion failed";
@@ -39,7 +36,7 @@ if(isset($_GET['deleteID'])){
     $result = remove_carts($id);
    
     if($result){
-        header("Location: ../view/cart.php");
+        header("Location: ../cart/cart.php");
 
     } 
 
@@ -49,14 +46,14 @@ if(isset($_GET['deleteID'])){
 }
 
 //UPDATE Cart
-if(isset($_GET['id'], $_GET['qty'])){      
+if(isset($_GET['updateID'])){      
 
-    $id = $_GET['id'];  
-    echo $id;
-    
+    $id = $_GET['updateID'];  
+   
+  
        
     $qty = $_GET['qty'];
-    echo $qty;
+   
     
 
     
@@ -69,10 +66,11 @@ if(isset($_GET['id'], $_GET['qty'])){
     
     
 
-    if($result === true){
-        header("Location: ../view/cart.php");
-    } 
-    else echo "update failed";
+    if($result)
+        echo "update successful";
+    
+    else
+        echo "update failed";
 
 
 }

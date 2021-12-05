@@ -46,29 +46,37 @@ if('success' == $tranx->data->status){
   $currency = 'GHS';
   $payment_date = date('Y/m/d');
   $customer_email = $_SESSION['customer_email'];
+  $customer_id = $_SESSION['customer_id'];
+  $invoice_no = rand(1,100);
+  $order_status = "Successful";
   $amount = total_Amount_in_Cart();
 
-  $recent_order = recent_order_controller();
   $result = select_all_cart_controller($ip);
+
+  $payment = add_payment($amount, $customer_id, $order_id, $currency, $payment_date);
+ 
+  
+  foreach ($result as $row){
+
+    $order= add_orders($customer_id, $invoice_no, $order_status);
+    
+  
+  }
+
+  foreach ($result as $row){
+
+  $order_details = add_orderdetails($order_id, $product_id, $qty);
   
 
+  }
 
-foreach ($result as $row){
+  foreach ($result as $row){
 
-  $order_details = add_order_details_controller($recent_order['recent'], $row['p_id'],$row['qty']);
-  
+  $delete_details = remove_carts($row['p_id'],$ip);
 
-}
-
-$payment = add_payment_details_controller($amount, $customer_email, $recent_order['recent'], $currency, $payment_date);
-
-foreach ($result as $row){
-
-  $delete_details = delete_from_cart_controller($row['p_id'],$ip);
-
-}
-header('Location: index.php');
-}
+  }
+  header('Location: ../view/index.php');
+  }
 
 
 
@@ -76,6 +84,6 @@ header('Location: index.php');
   // insert order
   // clear cart
 
-  // redirect to cart
+  // redirect to index
 
 

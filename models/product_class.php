@@ -46,9 +46,33 @@ class Product extends Dbconnection{
 	
 	
 
+	function add_productm($product_cat, $product_brand, $product_title, $product_price, $product_desc, $product_image){
+		// return true or false
+		return $this->query("insert into productsm(product_cat, product_brand, product_title, product_price, product_desc, product_image) values('$product_cat', '$product_brand', '$product_title', '$product_price', '$product_desc', '$product_image')");
+		
+
+	}
+
+	function update_one_productm($product_cat, $product_brand, $product_title, $product_price, $product_desc, $product_image, $product_id){
+		
+		// return true or false
+		return $this->query("UPDATE `productsm` SET `product_cat`='$product_cat',`product_brand`='$product_brand',`product_title`='$product_title',`product_price`='$product_price',`product_desc`='$product_desc',`product_image`='$product_image' WHERE `product_id`='$product_id'");
+	}
+
+	function delete_one_productm($id){
+		// return true or false
+		return $this->query("delete from productsm where product_id = '$id'");
+	}
+
 	function select_all_products(){
 		// return array or false
 		return $this->query("select * from products");
+	}
+
+	
+	function select_mothercare_products(){
+		// return array or false
+		return $this->query("select * from productsm");
 	}
 	
 	function select_all_brands(){
@@ -64,6 +88,11 @@ class Product extends Dbconnection{
 	function select_one_products($id){
 		// return associative array or false
 		return $this->query("select * from products where product_id='$id'");
+	}
+
+	function select_one_productm($id){
+		// return associative array or false
+		return $this->query("select * from productsm where product_id='$id'");
 	}
 
 	function select_one_brands($id){
@@ -88,7 +117,10 @@ class Product extends Dbconnection{
 	function delete_one_categories($id){
 		// return true or false
 		return $this->query("delete from categories where cat_id = '$id'");
-	}	
+	}
+	
+	
+
 
 	
 

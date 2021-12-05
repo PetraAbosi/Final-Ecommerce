@@ -6,6 +6,7 @@
   $brands = select_all_brands_controller();
   $categories = select_all_categories_controller();
   $products = select_all_products_controller();
+  $productm = select_all_mothercare_controller();
 
 ?>
 <!doctype html>
@@ -32,7 +33,7 @@
                     <a class="nav-link" href="../view/index.php">Home</a>
                 </li>
           <li class="nav-item">
-                    <a class="nav-link" href="logout.php">Logout</a>
+                    <a class="nav-link" href="../login/logout.php">Logout</a>
                 </li>         
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -49,6 +50,10 @@
 
                   <li class="nav-item">
                       <a class="nav-link btn" data-toggle="modal" data-target="#addProductModal" >Add Product</a>
+                  </li>
+                  
+                  <li class="nav-item">
+                      <a class="nav-link btn" data-toggle="modal" data-target="#exampleModal" >Add Product</a>
                   </li>
                 
                 
@@ -172,26 +177,11 @@
                               </div>
                               <div class ="form-group">
 
-                               <!-- <label for="type of product">Category: </label>
-
-                                <select name="cars" id="cars">
-                                <option value="volvo">Volvo</option>
-                                <option value="saab">Saab</option>
-                                <option value="mercedes">Mercedes</option>
-                                <option value="audi">Audi</option>
-
-                                </select>-->
+                
                               </div>
 
                               <div class="form-group">
 
-<!--                                  <div class="input-group input-group-merge input-group-alternative mb-3">-->
-<!--                                      <div class="input-group-prepend">-->
-<!--                                          <span class="input-group-text"><i class="ni ni-active-40"></i></span>-->
-<!--                                      </div>-->
-<!--                                      <input  type="hidden" class="form-control" name="status" value="1">-->
-<!---->
-<!--                                  </div>-->
 
                               </div>
 
@@ -208,6 +198,10 @@
           </div>
 
           <!--          ADD PRODUCT MODAL END -->
+
+
+
+    
 
 
 
@@ -272,84 +266,147 @@
                   </div>
               </div>
           </div>
+
 <!--  ADD PRODUCT MODAL  END -->
 
 
-          <h5>Brand</h5>
-          <table class="table table-hover ">
-              <thead>
-              <tr>
+    <!--          ADD PRODUCTMC MODAL-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Add MC Product</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          <form method="post" id="UploadForm" action="../actions/productm_action.php" enctype="multipart/form-data" onsubmit="return validateUpload()">
 
-                  <th>Brand Name</th>
-                 
-                  
-                  <th></th>
-				  <th></th>
 
-              </tr>
-              </thead>
-              <tbody>
+                              <div class="form-group">
+                                  <div class="input-group input-group-merge input-group-alternative mb-3">
+                                      <div class="input-group-prepend">
+                                          <span class="input-group-text"><i class="ni ni-ui-04"></i></span>
+                                      </div>
+                                      <select id="brand_id" class="form-control" name="brand_name" required>
+                                          <option  value="" disabled selected> -- select brand -- </option>
+                                      <?php
+                                      if ($brands){
+                                          foreach ($brands as $value){
+                                              $brand_name = $value['brand_name'];
+                                              $brand_id = $value['brand_id'];
 
-              <?php
+                                              echo "<option value='$brand_id'>$brand_name</option>";
+                                          }
 
-                foreach ($brands as $x) {
-                                    
-                                       
-                    echo 
-				"
-				<tr>
-					<td>{$x['brand_name']}</td>
-					
-					<td><a href='update_brand.php?id={$x['brand_id']}'>Update</a></td>
-					<td><a href='../actions/delete_action.php?deleteBrandsID={$x['brand_id']}'>Delete</a></td>
-				</tr>
-				";                     
+                                      }
+                                      ?>
+                                      </select >
+                                      <small style="color:red;" id="category_error"></small>
 
-                     
-                }              
+<!--                                      <input id="name" type="text" placeholder="Name" class="form-control " name="name"   autocomplete="name" autofocus>-->
 
-              ?>
-              </tbody>
-          </table>
-          
-          <h5>Category</h5>
-          <table class="table table-hover ">
-              <thead>
-              <tr>
 
-                  <th>Category Name</th>
-                 
-                  
-                  <th></th>
-				  <th></th>
+                                      <select id="category_id" class="form-control pull-right" name="cat_name"  required>
+                                          <option value="" disabled selected> -- select category -- </option>
+                                          <?php
+                                          if ($categories){
+                                              foreach ($categories as $value){
+                                                  $cat_name = $value['cat_name'];
+                                                  $cat_id = $value['cat_id'];
 
-              </tr>
+                                                  echo "<option value='$cat_id' >$cat_name</option>";
+                                              }
 
-              </thead>
+                                          }
+                                          ?>
 
-              <tbody>
+                                      </select>
+                                  </div>
 
-              <?php
 
-                foreach ($categories as $x) {
-                                    
-                                       
-                    echo 
-				"
-				<tr>
-					<td>{$x['cat_name']}</td>
-					
-					<td><a href='update_cat.php?id={$x['cat_id']}'>Update</a></td>
-					<td><a href='../actions/delete_action.php?deleteCategoriesID={$x['cat_id']}'>Delete</a></td>
-				</tr>
-				";                     
+                                  <small style="color:red;" id="category_error"></small>
+                              </div>
 
-                     
-                }              
+                              <div class="form-group">
+                                  <div class="input-group input-group-merge input-group-alternative mb-3">
+                                      <div class="input-group-prepend">
+                                          <span class="input-group-text"><i class="ni ni-align-left-2"></i></span>
+                                      </div>
+                                      <input  type="text" placeholder="Product title" class="form-control " name="prod_title" id="prod_title" value=""  autocomplete="title" autofocus required>
+                                  </div>
 
-              ?>
-              </tbody>
-          </table>
+
+                                  <small style="color:red;" id="title_error"></small>
+
+                              </div>
+                              <div class="form-group">
+                                  <small class="mb-2">Price: </small>
+                                  <div class="input-group input-group-merge input-group-alternative mb-3">
+                                      <div class="input-group-prepend">
+                                          <span class="input-group-text"><i class="ni ni-active-40"></i></span>
+                                      </div>
+                                      <input  type="number" placeholder="Product price"  class="form-control "  id="prod_price" name="prod_price" value="" autocomplete="price" required>
+
+                                  </div>
+
+
+                                  <small style="color:red;" id="price_error"></small>
+
+                              </div>
+
+                              <div class="form-group">
+                                  <div class="input-group input-group-merge input-group-alternative">
+                                      <div class="input-group-prepend">
+                                          <span class="input-group-text"><i class="ni ni-align-left-2"></i></span>
+                                      </div>
+                                      <textarea   cols="3" rows="3" id="prod_desc" name="prod_desc" class="form-control"  placeholder="Product description" required></textarea>
+
+
+                                  </div>
+
+
+                                  <small style="color:red;" id="description_error"></small>
+
+                              </div>
+
+                              <div class="form-group">
+                                  <div class="input-group input-group-merge input-group-alternative">
+                                      <div class="input-group-prepend">
+                                          <span class="input-group-text"><i class="ni ni-image"></i></span>
+                                      </div>
+                                      <input type="file" class="form-control" id="prod_img" name="prod_img" accept="image/x-png,image/gif,image/jpeg" placeholder="Select product image" required>
+
+
+
+                                  </div>
+
+                                  <small style="color:red;" id="image_error" ></small>
+                              </div>
+                              <div class ="form-group">
+
+                
+                              </div>
+
+                              <div class="form-group">
+
+
+                              </div>
+
+
+                              <input type="submit" name="addProduct" class="btn btn-primary" value="Add MC Product">
+
+
+                          </form>
+
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+
+          <!--          ADD PRODUCTMC MODAL END -->
           
 
           <h5>Products</h5>
@@ -389,6 +446,53 @@
 					
 					<td><a href='update_product.php?id={$x['product_id']}'>Update</a></td>
 					<td><a href='../actions/delete_action.php?deleteProductsID={$x['product_id']}'>Delete</a></td>
+				</tr>
+				";                     
+
+                     
+                }              
+
+              ?>
+              </tbody>
+          </table> 
+
+
+          <table class="table table-hover ">
+              <thead>
+              <tr>
+
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>          
+                  
+                      <th></th>
+				 
+
+              </tr>
+              </thead>
+              <tbody>
+
+              <?php
+
+                foreach ($productm as $x) {
+                                    
+                                       
+                    echo 
+				"
+				<tr>
+                    <td>{$x['product_id']}</td>
+					<td>{$x['product_cat']}</td>
+                    <td>{$x['product_brand']}</td>
+                    <td>{$x['product_title']}</td>
+                    <td>{$x['product_price']}</td>
+                    <td>{$x['product_desc']}</td>
+                    
+					
+					<td><a href='../actions/productm_action.php?id={$x['product_id']}'>Update</a></td>
+					<td><a href='../actions/productm_action.php?deleteProductsID={$x['product_id']}'>Delete</a></td>
 				</tr>
 				";                     
 

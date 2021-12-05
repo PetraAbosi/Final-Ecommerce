@@ -3,25 +3,27 @@ require('../models/cart_class.php');
 
 // add to cart
 function add_carts($prod_id, $ip, $qty){
-   
+  
 	$ip = Cart::getIpAddress();
         
     $cart_instance = new Cart();
-   
+    
     //check for duplicates
     $check = validate_cart($ip, $prod_id);
-
+    
     if(count($check) > 0){
         echo '<script>alert("Item already in cart. Consider increasing the quantity in cart");
-                    window.location ="../view/cart.php";
+                    window.location ="../cart/cart.php";
                   </script>';
       
         
     } 
     else{ 
             $add = $cart_instance->add_carts($prod_id, $ip, $qty);
+            var_dump($add);
+            exit;
         if($add){
-            header("Location: ../view/cart.php");
+            header("Location: ../cart/cart.php");
 
         } 
         else{
@@ -32,22 +34,46 @@ function add_carts($prod_id, $ip, $qty){
 
 }
 
-function add_order_details_controller($order_id, $product_id, $qty){
+function add_orderdetails($order_id, $product_id, $qty){
+    $toReturn = false;
+    $ip = Cart::getIpAddress();
+    $customer_id = $_SESSION['customer_id'];
     $cart_instance = new Cart();
-    return $cart_instance->add_order_details($order_id, $product_id, $qty);
+    $cartProducts = $cart_instance->order_items($ip);
+    if($cartProducts){
+        $cartItems = $cart_instance->fetch();
+
+        foreach ($cartItems as $item =>$value) {
+            $product_id = $value[0];
+            $qty = $value[10];
+            $order_details = $cart_instance->add_order_details($order_id, $product_id, $qty);
+        }
+    }
+   return $order_details ;
+  
 }
 
-function add_payment_details_controller($amt, $c_id, $order_id, $currency, $payment_date){
+function add_payment($amount, $customer_id, $order_id, $currency, $payment_date){
+    $toReturn = false;
+    $ip = Cart::getIpAddress();
+    $customer_id = $_SESSION['customer_id'];
     $cart_instance = new Cart();
-    return $cart_instance->add_payment_details($amt, $c_id, $order_id, $currency, $payment_date);
+    $cartProducts = $cart_instance->payment_items($ip);
+    if($cartProducts){
+        $cartItems = $cart_instance->fetch();
+
+        foreach ($cartItems as $item =>$value) {
+            $product_id = $value[0];
+            $qty = $value[10];
+            $payment = $cart_instance->add_payment_details($amount, $customer_id, $order_id, $currency, $payment_date);
+        }
+    return $payment;
+    }
 }
 
 function select_all_cart_controller($ip){
     // create an instance of the Product class
-    $cart_instance = new Cart();
-
-
-        
+    $cart_instance = new Cart();   
     
     //create empty array
     $arr = array();
@@ -71,14 +97,7 @@ function select_all_cart_controller($ip){
 
 }
 
-
-
-function delete_from_cart_controller($product_id,$ip_add){
-    $cart_instance = new Cart();
-    return $cart_instance->delete_from_cart($product_id,$ip_add);
-}
-
-function recent_order_controller(){
+function recent_order(){
     $cart_instance = new Cart();
     return $cart_instance->recent_order();
 }
@@ -92,7 +111,7 @@ function remove_carts($prod_id){
 
     $remove = $cart_instance->remove_carts($prod_id, $ip);
         if($remove){
-            header("Location: ../view/cart.php");
+            header("Location: ../cart/cart.php");
 
         } 
         else{
@@ -212,139 +231,72 @@ function displayCart(){
         $product_image = $value['product_image'];
         $product_desc = $value['product_desc'];
         $amount = $product_price*$product_quantity;
-
-        /*$ip = Cart::getIpAddress();
-
-        $method = select_one_cart($id);
-        var_dump($method);
-        $getID = $method[0]['product_id'];
-       */
-
-      
-          
-
          
 
         echo <<< _ALL
-       
+            
+            <div class="col-12 col-lg-8">
+            <div class="cart-title mt-50">
+            </div>
 
-             <table cellspacing="0" class="shop_table cart">
-            <thead>
-            <tr>
-                <th class="product-remove">&nbsp;</th>
-                <th class="product-thumbnail">&nbsp;</th>
-                <th class="product-name">Product</th>
-                <th class="product-price">Price</th>
-                <th class="product-quantity">Quantity</th>
-                <th class="product-subtotal">Total</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="cart_item">
-                <td class="product-remove">
-                    <a title="Remove this item" class="remove" href="">x</a> 
-                </td>
+            <div class="cart-table clearfix">                          
 
-                <td class="product-thumbnail">
-                    <a href="singleProduct.php"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="$product_image"></a>
-                </td>
+                <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="cart_product_img">
+                            <a href="#"><img src="$product_image" alt="Product"></a>
+                        </td>
+                        <td class="cart_product_desc">
+                            <h5>$product_title</h5>
+                        </td>
+                        <td class="price">
+                            <span>$product_price</span>
+                        </td>
+                        <td class="qty">
+                            <div class="qty-btn d-flex">
+                                <p>Qty</p>
+                                <div class="quantity">
+                                    <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="qty" value="$product_quantity">
+                                    <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                  
+                  
+                </tbody>
+            </table>
+            </div>
+            </div>
+            <div class="col-12 col-lg-4">
+            <div class="cart-summary">
+                <h5>Cart Item</h5>
+                    <ul class="summary-table">
+                        <li><span>price:</span> <span>$product_price</span></li>
+                        <li><span>delivery:</span> <span>Free</span></li>
+                        <li><span> sub total:</span> <span>$amount</span></li>
+                    </ul>
 
-                <td class="product-name">
-                    <a href="singleProduct.php">$product_title</a> 
-                </td>
-
-                <td class="product-price">
-                    <span class="amount">$product_price</span> 
-                </td>
-
-                <td class="product-quantity">
-                    
-                <div class="quantity buttons_added">
-                  <form action="../actions/cart_action.php">
-
-                     
-                <input type="button" class="minus" value="-">
-                        <input type="number" size="4" class="input-text qty text" title="Qty" value="$product_quantity" name="qty" min="0" step="1">
-                        <input type="button" class="plus" value="+">
-                    </div>
-                </td>
-
-                <td class="product-subtotal">
-                    <span class="amount">$amount</span> 
-                </td>
-                <input class="form-control" type="hidden" placeholder="id" name="id" value="$id">
-
-
-                </tr>
-                <tr>
-                <td class="actions" colspan="6">
-
-                <input type="submit" class="btn btn-primary" name="$ip" value="Update Item" > 
-                
-              
-                </form> 
-                   
                     <a class="btn btn-primary" href='../actions/cart_action.php?deleteID={$value['product_id']}'> 
                         Delete Item
-                    </a>  
-                    
-                    <a class="btn btn-primary" href='../actions/validatecheckout.php'> 
-                    Checkout
-                    </a>
-
-                    
+                    </a> 
+                    <button type="button"  value = "$id" class="btn btn-primary" onclick= "return updateQuantity(this.value); "> 
+                        Update Item
+                    </button> 
+               
+            </div>
+            </div>
             
-                    
-                    
-                </td>
-            </tr>
-            </tbody>
-        </table>
-      
-
-        <div class="cart-collaterals">
-
-
-        <div class="cross-sells">
-        <h2></h2>
-        <ul class="products">
-        <li class="product">
-            <a href="singleProduct.php">
-                <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="$product_image">
-                <h3>Ship Your Idea</h3>
-                <span class="price"><span class="amount">$product_price</span></span>
-            </a>
-
-            <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="singleProduct.php">Select options</a>
-        </li>
-
-        
-        </ul>
-        </div>
-
-
-        <div class="cart_totals ">
-        <h2>Cart Totals</h2>
-
-        <table cellspacing="0">
-        <tbody>
-            <tr class="cart-subtotal">
-                <th>Cart Subtotal</th>
-                <td><span class="amount">$amount</span></td>
-            </tr>
-
-            <tr class="shipping">
-                <th>Shipping and Handling</th>
-                <td>Free Shipping</td>
-            </tr>
-
-            <tr class="order-total">
-                <th>Order Total</th>
-                <td><strong><span class="amount">$amount</span></strong> </td>
-            </tr>
-        </tbody>
-        </table>
-        </div>
 
         _ALL;
 
@@ -394,7 +346,7 @@ function add_orders($customer_id, $invoice_no, $order_status){
 
     else{ 
            
-            header("Location: ../view/cart.php");
+            header("Location: ../cart/cart.php");
     }
 
 }

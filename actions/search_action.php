@@ -4,10 +4,10 @@ require('../controllers/search_controller.php');
 
 //ADDING BRAND
 // check if theres a POST variable with the name 'addProductButton'
-if(isset($_GET['submit'])){
+if(isset($_GET['s'])){
     // retrieve the name, description and quantity from the form submission
   
-    $product_title = $_GET['product_title']; 
+    $product_title = $_GET['title']; 
  
      
     // call the search product title controller function: return true or false

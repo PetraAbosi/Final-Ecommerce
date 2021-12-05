@@ -29,6 +29,19 @@ ul{
 	padding:0;
 }
 
+.column {
+    float: left;
+    width: 33.33%;
+    padding: 5px;
+  }
+  
+  /* Clearfix (clear floats) */
+  .row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
 /*--popup--*/
 .agileits {
     padding: 3em;
@@ -495,15 +508,15 @@ span.fa.fa-shopping-cart.my-cart-icon {
     padding: 10px;
     outline: none;
     font-size: 1em;
-    color: #fff;
-    border: 1px solid #FFF;
+    color: #000;
+    border-color: 1px solid #000;
     background: rgba(255, 255, 255, 0.45);
 }
 .search-form input[type='submit']{
 	    width: 40px;
     height: 41px;
     outline: none;
-    border: 1px solid #fff;
+    border: 1px solid #000;
     background: url(../images/can.png) no-repeat 6px 7px #FCCD1E;
     display: inline-block;
 }
@@ -668,12 +681,12 @@ ul.nav.tabs {
 	    position: absolute;
     top: 0;
     right: -15px;
-    border: 2px solid #ED0612;
+    border: 2px solid #F1F1F1;
     border-radius: 100px 0 0 100px;
     padding: 2px;
 }
 .offer p{
-    background: #ED0612;
+    background: #F1F1F1;
     border-radius: 100px 0px 0px 100px;
     text-align: center;
     line-height: 0em !important;

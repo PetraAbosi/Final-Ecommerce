@@ -30,8 +30,7 @@
             $_SESSION['customer_city']=$login["customer_city"];
             $_SESSION['user_role']=$login["user_role"];
             $_SESSION['customer_contact']=$login["customer_contact"];
-            // echo $_SESSION['user_id'];
-            // echo  $_SESSION['user_role'];
+        
 
             if($_SESSION['user_role']==1){
               //if role is 1 load admin index page

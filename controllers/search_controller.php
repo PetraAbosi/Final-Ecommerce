@@ -40,29 +40,50 @@ function displaySearchProduct($product_title){
         $product_title = $value['product_title'];
         $product_price = $value['product_price'];
         $product_image = $value['product_image'];
+        $product_desc = $value['product_desc'];
         
        
 
   
-    echo <<<ALL
+        echo <<<ALL
+        
+        <form action="../cart/product-details.php">
 
-    <div class="col-md-3 col-sm-6">
-    <div class="single-shop-product">
-        <div class="product-upper">
-            <img src="$product_image" alt="Product image">
+        <div class="mid-1">
+        <div class="women">
+            <h2>$product_title</h2>							
+            <h4>$product_desc</h4>							
         </div>
-        <h2><a href="">$product_title</a></h2>
-        <div class="product-carousel-price">
-            <ins>GHS $product_price.00</ins> 
-        </div>  
-        
-   
-        
-        <div class="product-option-shop">
-            <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="../view/cart.php?id=$product_id">Add to Cart</a>
-        </div>                       
-    </div>
-    </div>
+        <div class="mid-2">
+            <p ><label></label><em class="item_price">GHS $product_price.00</em></p>
+              <div class="block">
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="col-md-5 m-wthree">
+        <div class="col-m">
+            <img src="$product_image" class="img-responsive" alt="">
+        </a>
+       
+
+            <div class="mid-3">
+                  <div class="block">
+                    <div class="starbox small ghosting"> </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div >
+                <input type="hidden" name='id' value="$product_id">
+            </div>
+                    <div class="add">
+               <button class="btn btn-danger my-cart-btn my-cart-b" data-id="2" data-name="addCartButton" data-summary="summary 2" data-price="$product_price" data-quantity="1" data-image=" $product_image" href='singleProduct.php?id=$product_id'>Select Product</button>
+            </div>
+        </div>
+        </div>
+        </div>
+        </form>
     ALL;
     }
     
