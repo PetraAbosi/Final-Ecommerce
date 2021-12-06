@@ -20,8 +20,7 @@ function add_carts($prod_id, $ip, $qty){
     } 
     else{ 
             $add = $cart_instance->add_carts($prod_id, $ip, $qty);
-            var_dump($add);
-            exit;
+            
         if($add){
             header("Location: ../cart/cart.php");
 

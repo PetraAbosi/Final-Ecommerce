@@ -188,6 +188,10 @@ $id= $_GET['id'];
 
                                 <button type="submit" name="addtocart" value="5" class="btn amado-btn">Add to cart</button>  
 
+                                <div class="cart-btn mt-100">
+                                    <a href="../view/initialize.php" class="btn amado-btn w-70">Checkout</a>
+                                </div>
+
                             </form>
 
                         </div>
