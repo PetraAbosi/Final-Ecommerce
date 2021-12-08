@@ -60,7 +60,7 @@ $amount = total_Amount_in_Cart();
         <div class="mobile-nav">
             <!-- Navbar Brand -->
             <div class="amado-navbar-brand">
-                <a href="index.php"><img src="img/core-img/rose.png" alt=""></a>
+                <a href="index.php"><img src="../images/roselogo.png" alt=""></a>
             </div>
             <!-- Navbar Toggler -->
             <div class="amado-navbar-toggler">
