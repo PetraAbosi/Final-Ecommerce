@@ -41,7 +41,7 @@
             }  
           else {
             echo '<script>alert("Incorrect Password");
-            window.location ="../view/login.php";
+            window.location ="../login/login.php";
             </script>';
           }
         }
