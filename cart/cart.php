@@ -153,7 +153,7 @@ $amount = total_Amount_in_Cart();
             $.ajax({
                 type: "GET",
                 url: url,
-                success: (res) => setInterval('location.reload()'),
+                success: (res) => setInterval('location.reload()', 3000),
                 error: err => console.error(err)
             });
             
