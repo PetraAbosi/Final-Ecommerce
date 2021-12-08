@@ -21,7 +21,7 @@ class Cart extends Dbconnection{
 	}
 
 	function cart_item_amount($ip){
-		return $this->query("SELECT SUM(product_price * qty*1/100) AS amount FROM products JOIN cart ON products.product_id = cart.p_id AND cart.ip_add = '$ip'");
+		return $this->query("SELECT SUM(product_price * qty) AS amount FROM products JOIN cart ON products.product_id = cart.p_id AND cart.ip_add = '$ip'");
 	}
 
 	function validate_cart($ip, $prod_id){
