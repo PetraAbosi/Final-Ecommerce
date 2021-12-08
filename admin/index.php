@@ -52,9 +52,9 @@
                       <a class="nav-link btn" data-toggle="modal" data-target="#addProductModal" >Add Product</a>
                   </li>
                   
-                  <li class="nav-item">
+                  <!--<li class="nav-item">
                       <a class="nav-link btn" data-toggle="modal" data-target="#exampleModal" >Add Product</a>
-                  </li>
+                  </li>-->
                 
                 
               </ul>
