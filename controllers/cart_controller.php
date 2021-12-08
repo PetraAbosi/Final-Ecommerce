@@ -5,11 +5,13 @@ require('../models/cart_class.php');
 function add_carts($prod_id, $ip, $qty){
   
 	$ip = Cart::getIpAddress();
+    
         
     $cart_instance = new Cart();
     
     //check for duplicates
     $check = validate_cart($ip, $prod_id);
+   
     
     if(count($check) > 0){
         echo '<script>alert("Item already in cart. Consider increasing the quantity in cart");
@@ -20,6 +22,7 @@ function add_carts($prod_id, $ip, $qty){
     } 
     else{ 
             $add = $cart_instance->add_carts($prod_id, $ip, $qty);
+            
             
         if($add){
             header("Location: ../cart/cart.php");
@@ -33,41 +36,14 @@ function add_carts($prod_id, $ip, $qty){
 
 }
 
-function add_orderdetails($order_id, $product_id, $qty){
-    $toReturn = false;
-    $ip = Cart::getIpAddress();
-    $customer_id = $_SESSION['customer_id'];
+function add_order_details_controller($order_id, $product_id, $product_quantity){
     $cart_instance = new Cart();
-    $cartProducts = $cart_instance->order_items($ip);
-    if($cartProducts){
-        $cartItems = $cart_instance->fetch();
-
-        foreach ($cartItems as $item =>$value) {
-            $product_id = $value[0];
-            $qty = $value[10];
-            $order_details = $cart_instance->add_order_details($order_id, $product_id, $qty);
-        }
-    }
-   return $order_details ;
-  
+    return $cart_instance->add_order_details($order_id, $product_id, $product_quantity);
 }
 
-function add_payment($amount, $customer_id, $order_id, $currency, $payment_date){
-    $toReturn = false;
-    $ip = Cart::getIpAddress();
-    $customer_id = $_SESSION['customer_id'];
+function add_payment_details_controller($amount, $customer_id, $recent_order, $currency, $payment_date){
     $cart_instance = new Cart();
-    $cartProducts = $cart_instance->payment_items($ip);
-    if($cartProducts){
-        $cartItems = $cart_instance->fetch();
-
-        foreach ($cartItems as $item =>$value) {
-            $product_id = $value[0];
-            $qty = $value[10];
-            $payment = $cart_instance->add_payment_details($amount, $customer_id, $order_id, $currency, $payment_date);
-        }
-    return $payment;
-    }
+    return $cart_instance->add_payment($amount, $customer_id, $recent_order, $currency, $payment_date);
 }
 
 function select_all_cart_controller($ip){
@@ -96,10 +72,10 @@ function select_all_cart_controller($ip){
 
 }
 
-function recent_order(){
-    $cart_instance = new Cart();
-    return $cart_instance->recent_order();
-}
+// function recent_order(){
+//     $cart_instance = new Cart();
+//     return $cart_instance->recent_order();
+// }
 
 
 //remove from cart
@@ -159,6 +135,35 @@ function update_cart_quantity($id, $qty){
 
 
 }
+
+
+function recent_order(){
+    $cart_array = array();
+
+    //create an instance of the product class
+    $cart_object = new Cart();
+
+    //run the search product method
+    $carts = $cart_object->recent_order();
+
+    //check if the method worked
+    if ($carts) {
+
+        //loop to see if there is more than one result
+        //fetch one at a time
+        while ($cart = $cart_object->fetch()) {
+
+            //Assign each result to the array
+            $cart_array[] = $cart;
+        }
+    }
+    //return the array
+
+    return (int)$cart_array[0]['recent'];
+
+    
+}
+
 
 //validate cart for uniqueness
 function validate_cart($ip, $prod_id){
@@ -223,6 +228,10 @@ function displayCart(){
 
   if ($cart) {
       foreach ($cart as $value) {
+
+        $_SESSION['product_quantity']=$value["qty"];
+        $_SESSION['product_id']=$value["product_id"];
+
         $id = $value['product_id'];
         $product_title = $value['product_title'];
         $product_price = $value['product_price'];
@@ -340,6 +349,7 @@ function add_orders($customer_id, $invoice_no, $order_status){
 
     if($cart_instance){
         $toReturn = $cart_instance->add_orders($customer_id, $invoice_no, $order_status);
+        $_SESSION['last_id'] = mysqli_insert_id($cart_instance->db);
         }
     
 
@@ -347,6 +357,17 @@ function add_orders($customer_id, $invoice_no, $order_status){
            
             header("Location: ../cart/cart.php");
     }
+
+}
+
+function getLastID(){
+    // create an instance of the Product class
+   $cart_instance = new Cart();
+
+   return $cart_instance->getLastID();
+    // call the method from the class
+
+    
 
 }
 

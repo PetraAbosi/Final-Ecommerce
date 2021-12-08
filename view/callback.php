@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require('../controllers/cart_controller.php');
 
 $curl = curl_init();
@@ -29,6 +30,8 @@ if($err){
 }
 
 $tranx = json_decode($response);
+// var_dump($tranx);
+// exit;
 
 if(!$tranx->status){
   // there was an error from the API
@@ -40,7 +43,6 @@ if('success' == $tranx->data->status){
   // please check other things like whether you already gave value for this ref
   // if the email matches the customer who owns the product etc
   // Give value
-  echo "<h2>Thank you for making a purchase. Your file has been sent your email.</h2>";
   
   $ip = Cart::getIpAddress();
   $currency = 'GHS';
@@ -50,11 +52,27 @@ if('success' == $tranx->data->status){
   $invoice_no = rand(1,100);
   $order_status = "Successful";
   $amount = total_Amount_in_Cart();
+  $product_id = $_SESSION['product_id']; 
+  $product_quantity= $_SESSION['qty'];
+
+
+
+
+  //echo $ip; echo $currency; echo $payment_date; echo $customer_email; echo $customer_id; echo $invoice_no; echo $order_status; echo $amount; echo $product_id; echo  $qty;
+ 
+  $recent_order =  recent_order();
+  // var_dump($recent_order);
+  // exit;
+
+ 
+  $payment = add_payment_details_controller($amount, $customer_id, $recent_order, $currency, $payment_date);
+  // var_dump($payment);
+  // exit;
+
 
   $result = select_all_cart_controller($ip);
-
-  $payment = add_payment($amount, $customer_id, $order_id, $currency, $payment_date);
- 
+  // var_dump($result);
+  // exit;
   
   foreach ($result as $row){
 
@@ -65,18 +83,21 @@ if('success' == $tranx->data->status){
 
   foreach ($result as $row){
 
-  $order_details = add_orderdetails($order_id, $product_id, $qty);
+  $order_details = add_order_details_controller($recent_order, $product_id, $product_quantity);
   
-
+  // var_dump($order_details);
+  // exit;
   }
+  
 
   foreach ($result as $row){
 
   $delete_details = remove_carts($row['p_id'],$ip);
 
   }
+
   header('Location: ../view/index.php');
-  }
+  
 
 
 
@@ -85,5 +106,6 @@ if('success' == $tranx->data->status){
   // clear cart
 
   // redirect to index
-
-
+ 
+}
+?>

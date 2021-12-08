@@ -29,7 +29,8 @@ class Cart extends Dbconnection{
 	}
 
 	function add_carts($prod_id, $ip, $qty){
-		return $this->query("insert into cart(`p_id`, `ip_add`,`qty`) values('$prod_id', '$ip', '$qty')");
+		$sql = "insert into cart(`p_id`, `ip_add`,`qty`) values('$prod_id', '$ip', '$qty')";
+		return $this->query($sql);
 	
 	}
 
@@ -51,12 +52,18 @@ class Cart extends Dbconnection{
 	}
 
 	public static function getIpAddress(){
-		$ip = isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
+		$ip = isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : isset($_SERVER['REMOTE_ADDR']);
         return $ip;
     }
 
-	function add_order_details($order_id, $product_id, $qty){
-		return $this->query("insert into orderdetails (order_id, product_id, qty) values ('$order_id', '$product_id','$qty' ");
+	function add_order_details($order_id, $product_id, $product_quantity){
+		$sql = "INSERT INTO `orderdetails`(`order_id`, `product_id`, `qty`) VALUES ('$order_id','$product_id','$product_quantity')";
+		// echo $sql;
+		// exit;
+
+		return $this->query($sql);
+		// var_dump($this->query($sql));
+		// exit;
 	}
 
 	function select_all_cart($ip){
@@ -64,11 +71,15 @@ class Cart extends Dbconnection{
 	}
 
 	function recent_order(){
-		return $this->fetchOne("select order_id, MAX(order_id) as recent from orders");
+		return $this->query("select MAX(order_id) as recent from orders");
 	}
 
-	function add_payment_details($amt, $c_id, $order_id, $currency, $payment_date){
-		return $this->query(" insert into payment amt, customer_id, order_id, currency, payment_date) values ('$amt', '$c_id', '$currency', '$payment_date'");
+	function add_payment($amount, $customer_id, $recent_order, $currency, $payment_date){
+		$sql = "INSERT INTO `payment`(`amt`, `customer_id`, `order_id`, `currency`, `payment_date`) VALUES ('$amount','$customer_id','$recent_order','$currency','$payment_date')";
+		return $this->query($sql);
+		// var_dump($this->query($sql));
+		// exit;
+
 	}
 
 }

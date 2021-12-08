@@ -73,9 +73,6 @@ class Dbconnection{
 		return false;
 	}
 
-	function count(){
-		
-	}
 
 
 }

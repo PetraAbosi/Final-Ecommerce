@@ -115,8 +115,8 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 						<ul class="nav navbar-nav ">
 							<li><a href="index.php" class="hyper "><span>Home</span></a></li>
-							<!--<li ><a href="productm.php" class="hyper "><span>Mothercare</span></a></li>-->
-							<li><a href="productu.php" class="hyper "><span>Products</span></a></li>			
+							<li><a href="productu.php" class="hyper "><span>Underwear</span></a></li>			
+							<li ><a href="productm.php" class="hyper "><span>Mothercare</span></a></li>
 							<li><a href="contact.php" class="hyper"><span>Contact Us</span></a></li>
 						</ul>
 					</div>
