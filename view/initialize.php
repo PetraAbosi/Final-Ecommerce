@@ -8,7 +8,7 @@ $amount = total_Amount_in_Cart()*100;// $_SESSION["amount"];;  //the amount in k
 
 // url to go to after payment
 // $callback_url = 'http://'.$_SERVER['SERVER_NAME']. '/ecommerceFinale/view/callback.php';  
-$callback_url = './view/callback.php';  
+$callback_url = 'http://shoppn.westeurope.cloudapp.azure.com/view/index.php;  
 
 
 curl_setopt_array($curl, array(
