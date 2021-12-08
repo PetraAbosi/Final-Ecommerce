@@ -47,7 +47,7 @@ function displaySearchProduct($product_title){
   
         echo <<<ALL
         
-        <form action="../cart/product-details.php">
+        <form action="../cart/singleProduct.php">
 
         <div class="mid-1">
         <div class="women">
