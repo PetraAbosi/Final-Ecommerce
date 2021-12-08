@@ -161,7 +161,7 @@ $id= $_GET['id'];
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                     </div>
                                     <div class="review">
-                                        <a href="#">Write A Review</a>
+                                        <!--<a href="#">Write A Review</a>-->
                                     </div>
                                 </div>
                                 <!-- Avaiable -->
@@ -187,6 +187,10 @@ $id= $_GET['id'];
                                 <input type="hidden" name='product_id' value="<?php echo $prod_id?>">  
 
                                 <button type="submit" name="addtocart" value="5" class="btn amado-btn">Add to cart</button>
+
+                                <div class="cart-btn mt-100">
+                                <a href="../view/initialize.php" class="btn amado-btn w-70">Checkout</a>
+                                </div>
 
                             </form>
 

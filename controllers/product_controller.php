@@ -98,7 +98,7 @@ function displayAllProduct(){
   
     echo <<<ALL
         
-        <form action="../cart/product-details.php">
+        <form action="../cart/singleProduct.php">
         <div class="col-md-5 m-wthree">
         <div class="col-m">
             <img src="$product_image" class="img-responsive" alt="">
@@ -119,7 +119,7 @@ function displayAllProduct(){
             </div>
 
             <div class="mid-3">
-                <h2 ><label></label><em class="item_price">50% Discount</em></h2>
+               <!-- <h2 ><label></label><em class="item_price">50% Discount</em></h2>-->
                   <div class="block">
                     <div class="starbox small ghosting"> </div>
                 </div>

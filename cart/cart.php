@@ -29,7 +29,7 @@ $amount = total_Amount_in_Cart();
 
 <body>
                 <div class="cart-btn mt-100">
-                    <a href="../cart/checkout.php" class="btn amado-btn w-100">Order</a> 
+                    <a href="../cart/payment.php" class="btn amado-btn w-100">Order</a> 
                 </div>
 
     <!-- Search Wrapper Area Start -->
