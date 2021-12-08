@@ -232,9 +232,13 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 					<div class="col-md-4 fo-grid1">
 						<p><a href="mailto:info@example.com"><i class="fa fa-envelope-o" aria-hidden="true"></i>rose@gmail.com</a></p>
 					</div>
+
 					<div class="clearfix"></div>
 					
 					</div>
+					<a style="color:white" href="../view/terms.php">Terms of use</a>
+
+
 			</div>
 		<div class="copy-right">
 			<p> &copy; Rose. All Rights Reserved </p>
