@@ -76,7 +76,7 @@ $amount = total_Amount_in_Cart();
             </div>
             <!-- Logo -->
             <div class="logo">
-                <a href="../view/index.php"><img src="img/core-img/rose.png" alt=""></a>
+                <a href="../view/index.php"><img src="../images/roselogo.png" alt=""></a>
             </div>
             <!-- Amado Nav -->
             <nav class="amado-nav">
